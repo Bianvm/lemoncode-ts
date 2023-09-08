@@ -47,7 +47,7 @@ function reset (){
 }
 
 function operator (){
-    let operatorShift = parseInt((shiftCounter as HTMLInputElement).value);
+    let operatorShift = parseInt((boxText as HTMLInputElement).value);
         if (!!boxText && !!shiftCounter && operatorShift<100 && operatorShift>=0){
             shiftCounter.innerHTML = operatorShift.toString().padStart(2, '0');
         } else{
