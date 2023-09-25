@@ -1,5 +1,5 @@
-const shiftCounter = document.getElementById('shiftCounter') as HTMLHeadingElement;
-const boxText = document.getElementById('box-text') as HTMLInputElement;
+const shiftCounter = document.getElementById('shiftCounter');
+const boxText = document.getElementById('box-text');
 
 const buttonPrevious = document.getElementById('previousshift');
 if (buttonPrevious !== null && buttonPrevious !== undefined && buttonPrevious instanceof HTMLButtonElement) {
@@ -55,11 +55,13 @@ function reset() {
 }
 
 function operator() {
-    let operatorShift = parseInt((boxText as HTMLInputElement).value);
-    if (!!boxText && !!shiftCounter && operatorShift < 100 && operatorShift >= 0) {
-        shiftCounter.textContent = operatorShift.toString().padStart(2, '0');
-    } else {
-        alert('Por favor, introduzca un número válido del 1 al 99');
+    if (boxText !== null && boxText !== undefined && boxText instanceof HTMLInputElement) {
+        const operatorShift = parseInt(boxText.value);
+        if (shiftCounter !== null && shiftCounter !== undefined && shiftCounter instanceof HTMLHeadingElement && operatorShift < 100 && operatorShift >= 0) {
+            shiftCounter.textContent = operatorShift.toString().padStart(2, '0');
+        } else {
+            alert('Por favor, introduzca un número válido del 0 al 99');
+        }
     }
 
 }           
