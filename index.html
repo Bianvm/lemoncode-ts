@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-  </head>
-  <body>
-    <div id="app">
-      <h1>TypeScript Sandbox</h1>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + TS</title>
+</head>
+
+<body>
+  <div class="app">
+    <h1>7 y medio -Solitario-</h1>
+    <button id="button-dameCarta"> Coger una carta</button>
+    <div id="cards">
+      <img id="boca-abajo" src="https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg"
+        alt="Baraja">
     </div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+    <div id="estado-juego"></div>
+    <div id="show-score"> </div>
+    <div class="button-group">
+      <button id="me-planto"> Me planto</button>
+      <button id="nueva-partida" disabled> Nueva partida</button>
+    </div>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+
+</body>
+
 </html>
