@@ -3,23 +3,32 @@ import "./style.css";
 let puntuacion = 0;
 const contadorPuntos = document.getElementById('show-score');
 const TOTAL_SCORE_TEXT = "Puntuación total: ";
+const BACK_IMAGE = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg";
 function muestraPuntuacion() {
     if (contadorPuntos !== null && contadorPuntos !== undefined && contadorPuntos instanceof HTMLDivElement) {
         contadorPuntos.textContent = `${TOTAL_SCORE_TEXT} ${puntuacion.toString()}`;
-
     }
-
 }
+
 window.addEventListener('load', function () {
     muestraPuntuacion();
 });
 
-function dameCarta() {
+function obtenerCartaAleatoria() {
     let cartaAleatoria = Math.floor(Math.random() * 10 + 1);
     if (cartaAleatoria > 7) {
         cartaAleatoria = cartaAleatoria + 2;
     }
+    return cartaAleatoria;
+}
+
+function dameCarta() {
+    const cartaAleatoria = obtenerCartaAleatoria();
     muestraCarta(cartaAleatoria);
+    actualizarPuntuacion(cartaAleatoria);
+    if (puntuacion > 7.5) {
+        gameOver();
+    }
 }
 
 const buttonDameCarta = document.getElementById('button-dameCarta');
@@ -57,81 +66,74 @@ function mapearCartaAImagen(idCarta: number) {
 
 const baraja = document.getElementById('boca-abajo');
 function muestraCarta(idCarta: number): void {
-
-    if (baraja !== null && baraja !== undefined && baraja instanceof HTMLImageElement) {
-        const imagenCarta = mapearCartaAImagen(idCarta);
-        baraja.src = imagenCarta;
-    }
-    puntuacion = puntuacion + idCarta;
-    muestraPuntuacion();
-    gameOver();
+    const imagenCarta = mapearCartaAImagen(idCarta);
+    cambiarImagen(imagenCarta);
 }
 
-function terminarPartida() {
-    if (buttonDameCarta !== null && buttonDameCarta instanceof HTMLButtonElement) {
-        buttonDameCarta.disabled = true;
-    }
-    if (buttonMePlanto !== null && buttonMePlanto instanceof HTMLButtonElement) {
-        buttonMePlanto.disabled = true;
-    }
-    if (nuevaPartidaButton !== null && nuevaPartidaButton !== undefined && nuevaPartidaButton instanceof HTMLButtonElement) {
-        nuevaPartidaButton.disabled = false;
+function actualizarPuntuacion(idCarta: number) {
+    puntuacion = idCarta > 7 ? puntuacion + 0.5 : puntuacion + idCarta;
+    muestraPuntuacion();
+}
+
+function cambiarImagen(url: string) {
+    if (baraja !== null && baraja !== undefined && baraja instanceof HTMLImageElement) {
+        baraja.src = url;
     }
 }
 
 function gameOver() {
-    if (puntuacion > 7.5) {
-        if (gameStatusDiv !== null && gameStatusDiv !== undefined && gameStatusDiv instanceof HTMLDivElement) {
-            gameStatusDiv.textContent = "GAME OVER";
-            terminarPartida();
-        }
+    if (estadoJuegoDiv !== null && estadoJuegoDiv !== undefined && estadoJuegoDiv instanceof HTMLDivElement) {
+        estadoJuegoDiv.textContent = "GAME OVER";
+        cambiarEstadoBotones();
     }
 }
 
-const gameStatusDiv = document.getElementById('estado-juego');
+const estadoJuegoDiv = document.getElementById('estado-juego');
 const buttonMePlanto = document.getElementById('me-planto');
 if (buttonMePlanto !== null && buttonMePlanto !== null && buttonMePlanto instanceof HTMLButtonElement) {
     buttonMePlanto.addEventListener('click', mePlanto);
-
 }
 
+function cambiarEstadoBotones() {
+    if (buttonDameCarta !== null && buttonDameCarta instanceof HTMLButtonElement) {
+        buttonDameCarta.disabled = !buttonDameCarta.disabled;
+    }
+    if (buttonMePlanto !== null && buttonMePlanto instanceof HTMLButtonElement) {
+        buttonMePlanto.disabled = !buttonMePlanto.disabled;
+    }
+    if (nuevaPartidaButton !== null && nuevaPartidaButton !== undefined && nuevaPartidaButton instanceof HTMLButtonElement) {
+        nuevaPartidaButton.disabled = !nuevaPartidaButton.disabled;
+    }
+}
 
 function mePlanto() {
-    if (gameStatusDiv !== null && gameStatusDiv !== undefined && gameStatusDiv instanceof HTMLDivElement) {
+    if (estadoJuegoDiv !== null && estadoJuegoDiv !== undefined && estadoJuegoDiv instanceof HTMLDivElement) {
         if (puntuacion >= 6 && puntuacion <= 7) {
-            gameStatusDiv.textContent = "casi, casi...";
+            estadoJuegoDiv.textContent = "casi, casi...";
         } else if (puntuacion === 5) {
-            gameStatusDiv.textContent = "Te ha entrado el canguelo eh?";
+            estadoJuegoDiv.textContent = "Te ha entrado el canguelo eh?";
         } else if (puntuacion <= 4) {
-            gameStatusDiv.textContent = "Has sido muy conservador";
+            estadoJuegoDiv.textContent = "Has sido muy conservador";
 
         } else if (puntuacion === 7.5) {
-            gameStatusDiv.textContent = "¡Lo has clavado! ¡Enhorabuena!";
+            estadoJuegoDiv.textContent = "¡Lo has clavado! ¡Enhorabuena!";
         }
-        terminarPartida();
+        cambiarEstadoBotones();
+    }
+}
 
+function reiniciarValores() {
+    puntuacion = 0;
+    muestraPuntuacion();
+    cambiarImagen(BACK_IMAGE);
+    if (estadoJuegoDiv !== null && estadoJuegoDiv !== undefined && estadoJuegoDiv instanceof HTMLDivElement) {
+        estadoJuegoDiv.textContent = "";
     }
 }
 
 function nuevaPartida() {
-    if (buttonDameCarta !== null && buttonDameCarta instanceof HTMLButtonElement) {
-        buttonDameCarta.disabled = false;
-    }
-    if (buttonMePlanto !== null && buttonMePlanto instanceof HTMLButtonElement) {
-        buttonMePlanto.disabled = false;
-    }
-    if (nuevaPartidaButton !== null && nuevaPartidaButton !== undefined && nuevaPartidaButton instanceof HTMLButtonElement) {
-        nuevaPartidaButton.disabled = true;
-    }
-    puntuacion = 0;
-    muestraPuntuacion();
-    if (baraja !== null && baraja !== undefined && baraja instanceof HTMLImageElement) {
-        baraja.src = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg";
-    }
-    if (gameStatusDiv !== null && gameStatusDiv !== undefined && gameStatusDiv instanceof HTMLDivElement) {
-        gameStatusDiv.textContent = "";
-    }
-
+    cambiarEstadoBotones();
+    reiniciarValores();
 }
 
 const nuevaPartidaButton = document.getElementById("nueva-partida");
