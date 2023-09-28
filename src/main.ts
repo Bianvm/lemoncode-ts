@@ -1,10 +1,10 @@
 import "./style.css";
 
 let puntuacion = 0;
-const contadorPuntos = document.getElementById('show-score');
 const TOTAL_SCORE_TEXT = "Puntuación total: ";
 const BACK_IMAGE = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg";
 function muestraPuntuacion() {
+    const contadorPuntos = document.getElementById('show-score');
     if (contadorPuntos !== null && contadorPuntos !== undefined && contadorPuntos instanceof HTMLDivElement) {
         contadorPuntos.textContent = `${TOTAL_SCORE_TEXT} ${puntuacion.toString()}`;
     }
@@ -14,23 +14,42 @@ window.addEventListener('load', function () {
     muestraPuntuacion();
 });
 
-function obtenerCartaAleatoria() {
-    let cartaAleatoria = Math.floor(Math.random() * 10 + 1);
-    if (cartaAleatoria > 7) {
-        cartaAleatoria = cartaAleatoria + 2;
-    }
-    return cartaAleatoria;
+function obtenerNumeroDeCarta() {
+    return Math.floor(Math.random() * 10 + 1);
+}
+
+function obtenerCarta(cartaAleatoria: number) {
+    return cartaAleatoria > 7 ? cartaAleatoria + 2 : cartaAleatoria;
 }
 
 function dameCarta() {
-    const cartaAleatoria = obtenerCartaAleatoria();
+    const idCarta = obtenerNumeroDeCarta();
+    const cartaAleatoria = obtenerCarta(idCarta);
     muestraCarta(cartaAleatoria);
-    actualizarPuntuacion(cartaAleatoria);
-    if (puntuacion > 7.5) {
+    const puntosDeCarta = puntosPorCarta(idCarta);
+    // sumar los puntos
+    sumarPuntos(puntosDeCarta);
+    // mostrar puntos
+    muestraPuntuacion();
+
+
+    // mostrar si hemos perdido
+    const haPerdido = partidaPerdida();
+
+    if (haPerdido) {
         gameOver();
     }
 }
+function puntosPorCarta(idCarta: number) {
+    return idCarta > 7 ? 0.5 : idCarta;
+}
 
+function sumarPuntos(puntosCarta: number) {
+    puntuacion = puntuacion + puntosCarta;
+}
+function partidaPerdida() {
+    return puntuacion > 7.5;
+}
 const buttonDameCarta = document.getElementById('button-dameCarta');
 if (buttonDameCarta !== null && buttonDameCarta !== undefined && buttonDameCarta instanceof HTMLButtonElement) {
     buttonDameCarta.addEventListener('click', dameCarta);
@@ -64,22 +83,20 @@ function mapearCartaAImagen(idCarta: number) {
     }
 }
 
-const baraja = document.getElementById('boca-abajo');
+
 function muestraCarta(idCarta: number): void {
     const imagenCarta = mapearCartaAImagen(idCarta);
     cambiarImagen(imagenCarta);
 }
 
-function actualizarPuntuacion(idCarta: number) {
-    puntuacion = idCarta > 7 ? puntuacion + 0.5 : puntuacion + idCarta;
-    muestraPuntuacion();
-}
-
 function cambiarImagen(url: string) {
+    const baraja = document.getElementById('boca-abajo');
     if (baraja !== null && baraja !== undefined && baraja instanceof HTMLImageElement) {
         baraja.src = url;
     }
 }
+
+
 
 function gameOver() {
     if (estadoJuegoDiv !== null && estadoJuegoDiv !== undefined && estadoJuegoDiv instanceof HTMLDivElement) {
@@ -106,7 +123,7 @@ function cambiarEstadoBotones() {
     }
 }
 
-function mePlanto() {
+function ponerTextoVictoria() {
     if (estadoJuegoDiv !== null && estadoJuegoDiv !== undefined && estadoJuegoDiv instanceof HTMLDivElement) {
         if (puntuacion >= 6 && puntuacion <= 7) {
             estadoJuegoDiv.textContent = "casi, casi...";
@@ -114,12 +131,15 @@ function mePlanto() {
             estadoJuegoDiv.textContent = "Te ha entrado el canguelo eh?";
         } else if (puntuacion <= 4) {
             estadoJuegoDiv.textContent = "Has sido muy conservador";
-
         } else if (puntuacion === 7.5) {
-            estadoJuegoDiv.textContent = "¡Lo has clavado! ¡Enhorabuena!";
+            estadoJuegoDiv.textContent = "¡Lo has clavado! ¡Enhorabuena!"
         }
-        cambiarEstadoBotones();
     }
+}
+
+function mePlanto() {
+    ponerTextoVictoria();
+    cambiarEstadoBotones();
 }
 
 function reiniciarValores() {
