@@ -169,6 +169,7 @@ if (estadoJuegoDiv !== null &&
 function nuevaPartida() {
     reiniciarValores();
     cambiarEstadoBotones();
+    mostrarMensaje(" ");
 }
 
 const nuevaPartidaButton = document.getElementById("nueva-partida");
