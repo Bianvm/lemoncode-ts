@@ -5,7 +5,9 @@ const TOTAL_SCORE_TEXT = "Puntuación total: ";
 const BACK_IMAGE = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg";
 function muestraPuntuacion() {
     const contadorPuntos = document.getElementById('show-score');
-    if (contadorPuntos !== null && contadorPuntos !== undefined && contadorPuntos instanceof HTMLDivElement) {
+    if (contadorPuntos !== null &&
+        contadorPuntos !== undefined &&
+        contadorPuntos instanceof HTMLDivElement) {
         contadorPuntos.textContent = `${TOTAL_SCORE_TEXT} ${puntuacion.toString()}`;
     }
 }
@@ -27,18 +29,10 @@ function dameCarta() {
     const cartaAleatoria = obtenerCarta(idCarta);
     muestraCarta(cartaAleatoria);
     const puntosDeCarta = puntosPorCarta(idCarta);
-    // sumar los puntos
     sumarPuntos(puntosDeCarta);
-    // mostrar puntos
     muestraPuntuacion();
+    gestionarPartida();
 
-
-    // mostrar si hemos perdido
-    const haPerdido = partidaPerdida();
-
-    if (haPerdido) {
-        gameOver();
-    }
 }
 function puntosPorCarta(idCarta: number) {
     return idCarta > 7 ? 0.5 : idCarta;
@@ -47,11 +41,27 @@ function puntosPorCarta(idCarta: number) {
 function sumarPuntos(puntosCarta: number) {
     puntuacion = puntuacion + puntosCarta;
 }
+
+function gestionarPartida() {
+    partidaPerdida();
+    partidaGanada();
+}
 function partidaPerdida() {
-    return puntuacion > 7.5;
+    if (puntuacion > 7.5) {
+        mostrarMensaje("ohh... Has perdido :(");
+        cambiarEstadoBotones();
+    }
+}
+function partidaGanada() {
+    if (puntuacion === 7.5) {
+        mostrarMensaje("¡Enhorabuena, has ganado!");
+        cambiarEstadoBotones();
+    }
 }
 const buttonDameCarta = document.getElementById('button-dameCarta');
-if (buttonDameCarta !== null && buttonDameCarta !== undefined && buttonDameCarta instanceof HTMLButtonElement) {
+if (buttonDameCarta !== null &&
+    buttonDameCarta !== undefined &&
+    buttonDameCarta instanceof HTMLButtonElement) {
     buttonDameCarta.addEventListener('click', dameCarta);
 }
 
@@ -97,14 +107,6 @@ function cambiarImagen(url: string) {
 }
 
 
-
-function gameOver() {
-    if (estadoJuegoDiv !== null && estadoJuegoDiv !== undefined && estadoJuegoDiv instanceof HTMLDivElement) {
-        estadoJuegoDiv.textContent = "GAME OVER";
-        cambiarEstadoBotones();
-    }
-}
-
 const estadoJuegoDiv = document.getElementById('estado-juego');
 const buttonMePlanto = document.getElementById('me-planto');
 if (buttonMePlanto !== null && buttonMePlanto !== null && buttonMePlanto instanceof HTMLButtonElement) {
@@ -112,33 +114,43 @@ if (buttonMePlanto !== null && buttonMePlanto !== null && buttonMePlanto instanc
 }
 
 function cambiarEstadoBotones() {
-    if (buttonDameCarta !== null && buttonDameCarta instanceof HTMLButtonElement) {
+    if (buttonDameCarta !== null &&
+        buttonDameCarta instanceof HTMLButtonElement) {
         buttonDameCarta.disabled = !buttonDameCarta.disabled;
     }
-    if (buttonMePlanto !== null && buttonMePlanto instanceof HTMLButtonElement) {
+    if (buttonMePlanto !== null &&
+        buttonMePlanto instanceof HTMLButtonElement) {
         buttonMePlanto.disabled = !buttonMePlanto.disabled;
     }
-    if (nuevaPartidaButton !== null && nuevaPartidaButton !== undefined && nuevaPartidaButton instanceof HTMLButtonElement) {
+    if (nuevaPartidaButton !== null &&
+        nuevaPartidaButton !== undefined &&
+        nuevaPartidaButton instanceof HTMLButtonElement) {
         nuevaPartidaButton.disabled = !nuevaPartidaButton.disabled;
     }
 }
 
-function ponerTextoVictoria() {
-    if (estadoJuegoDiv !== null && estadoJuegoDiv !== undefined && estadoJuegoDiv instanceof HTMLDivElement) {
-        if (puntuacion >= 6 && puntuacion <= 7) {
-            estadoJuegoDiv.textContent = "casi, casi...";
-        } else if (puntuacion === 5) {
-            estadoJuegoDiv.textContent = "Te ha entrado el canguelo eh?";
-        } else if (puntuacion <= 4) {
-            estadoJuegoDiv.textContent = "Has sido muy conservador";
-        } else if (puntuacion === 7.5) {
-            estadoJuegoDiv.textContent = "¡Lo has clavado! ¡Enhorabuena!"
-        }
+function mostrarMensaje(mensaje: string) {
+    if (mensaje && estadoJuegoDiv !== null &&
+        estadoJuegoDiv !== undefined &&
+        estadoJuegoDiv instanceof HTMLDivElement) {
+        estadoJuegoDiv.textContent = mensaje;
+    }
+}
+
+function ponerTexto() {
+    if (puntuacion >= 6 && puntuacion <= 7) {
+        mostrarMensaje("casi, casi...");
+    } else if (puntuacion === 5) {
+        mostrarMensaje("Te ha entrado el canguelo eh?");
+    } else if (puntuacion <= 4) {
+        mostrarMensaje("Has sido muy conservador");
+    } else if (puntuacion === 7.5) {
+        mostrarMensaje("¡Lo has clavado! ¡Enhorabuena!");
     }
 }
 
 function mePlanto() {
-    ponerTextoVictoria();
+    ponerTexto();
     cambiarEstadoBotones();
 }
 
@@ -146,17 +158,22 @@ function reiniciarValores() {
     puntuacion = 0;
     muestraPuntuacion();
     cambiarImagen(BACK_IMAGE);
-    if (estadoJuegoDiv !== null && estadoJuegoDiv !== undefined && estadoJuegoDiv instanceof HTMLDivElement) {
-        estadoJuegoDiv.textContent = "";
-    }
+
+}
+if (estadoJuegoDiv !== null &&
+    estadoJuegoDiv !== undefined &&
+    estadoJuegoDiv instanceof HTMLDivElement) {
+    estadoJuegoDiv.textContent = "";
 }
 
 function nuevaPartida() {
-    cambiarEstadoBotones();
     reiniciarValores();
+    cambiarEstadoBotones();
 }
 
 const nuevaPartidaButton = document.getElementById("nueva-partida");
-if (nuevaPartidaButton !== null && nuevaPartidaButton !== undefined && nuevaPartidaButton instanceof HTMLButtonElement) {
+if (nuevaPartidaButton !== null &&
+    nuevaPartidaButton !== undefined &&
+    nuevaPartidaButton instanceof HTMLButtonElement) {
     nuevaPartidaButton.addEventListener('click', nuevaPartida);
 }
