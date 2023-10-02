@@ -11,19 +11,19 @@ function muestraPuntuacion() {
         contadorPuntos.textContent = `${TOTAL_SCORE_TEXT} ${puntuacion.toString()}`;
     }
 }
-
+document.addEventListener("DOMContentLoaded", () => {
+    iniciarPartida();
+    muestraPuntuacion();
+});
 window.addEventListener('load', function () {
     muestraPuntuacion();
 });
-
 function obtenerNumeroDeCarta() {
     return Math.floor(Math.random() * 10 + 1);
 }
-
 function obtenerCarta(cartaAleatoria: number) {
     return cartaAleatoria > 7 ? cartaAleatoria + 2 : cartaAleatoria;
 }
-
 function dameCarta() {
     const idCarta = obtenerNumeroDeCarta();
     const cartaAleatoria = obtenerCarta(idCarta);
@@ -32,31 +32,28 @@ function dameCarta() {
     sumarPuntos(puntosDeCarta);
     muestraPuntuacion();
     gestionarPartida();
-
 }
 function puntosPorCarta(idCarta: number) {
     return idCarta > 7 ? 0.5 : idCarta;
 }
-
 function sumarPuntos(puntosCarta: number) {
     puntuacion = puntuacion + puntosCarta;
 }
-
 function gestionarPartida() {
-    partidaPerdida();
-    partidaGanada();
-}
-function partidaPerdida() {
+    if (puntuacion === 7.5) {
+        partidaGanada();
+    }
     if (puntuacion > 7.5) {
-        mostrarMensaje("ohh... Has perdido :(");
-        cambiarEstadoBotones();
+        partidaPerdida();
     }
 }
 function partidaGanada() {
-    if (puntuacion === 7.5) {
-        mostrarMensaje("¡Enhorabuena, has ganado!");
-        cambiarEstadoBotones();
-    }
+    mostrarMensaje("¡Enhorabuena, has ganado!");
+    cambiarEstadoBotones();
+}
+function partidaPerdida() {
+    mostrarMensaje("ohh... Has perdido :(");
+    cambiarEstadoBotones();
 }
 const buttonDameCarta = document.getElementById('button-dameCarta');
 if (buttonDameCarta !== null &&
@@ -64,7 +61,6 @@ if (buttonDameCarta !== null &&
     buttonDameCarta instanceof HTMLButtonElement) {
     buttonDameCarta.addEventListener('click', dameCarta);
 }
-
 function mapearCartaAImagen(idCarta: number) {
     switch (idCarta) {
         case 1:
@@ -88,31 +84,24 @@ function mapearCartaAImagen(idCarta: number) {
         case 12:
             return 'https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/12_rey-copas.jpg'
         default:
-            console.log(idCarta);
             return '';
     }
 }
-
-
 function muestraCarta(idCarta: number): void {
     const imagenCarta = mapearCartaAImagen(idCarta);
     cambiarImagen(imagenCarta);
 }
-
 function cambiarImagen(url: string) {
     const baraja = document.getElementById('boca-abajo');
     if (baraja !== null && baraja !== undefined && baraja instanceof HTMLImageElement) {
         baraja.src = url;
     }
 }
-
-
 const estadoJuegoDiv = document.getElementById('estado-juego');
 const buttonMePlanto = document.getElementById('me-planto');
 if (buttonMePlanto !== null && buttonMePlanto !== null && buttonMePlanto instanceof HTMLButtonElement) {
     buttonMePlanto.addEventListener('click', mePlanto);
 }
-
 function cambiarEstadoBotones() {
     if (buttonDameCarta !== null &&
         buttonDameCarta instanceof HTMLButtonElement) {
@@ -128,7 +117,13 @@ function cambiarEstadoBotones() {
         nuevaPartidaButton.disabled = !nuevaPartidaButton.disabled;
     }
 }
-
+function cambiarBotonDeduccion() {
+    if (buttonDeduccion !== null &&
+        buttonDeduccion !== undefined &&
+        buttonDeduccion instanceof HTMLButtonElement) {
+        buttonDeduccion.disabled = !buttonDeduccion.disabled;
+    }
+}
 function mostrarMensaje(mensaje: string) {
     if (mensaje && estadoJuegoDiv !== null &&
         estadoJuegoDiv !== undefined &&
@@ -136,7 +131,6 @@ function mostrarMensaje(mensaje: string) {
         estadoJuegoDiv.textContent = mensaje;
     }
 }
-
 function ponerTexto() {
     if (puntuacion >= 6 && puntuacion <= 7) {
         mostrarMensaje("casi, casi...");
@@ -148,33 +142,72 @@ function ponerTexto() {
         mostrarMensaje("¡Lo has clavado! ¡Enhorabuena!");
     }
 }
-
 function mePlanto() {
     ponerTexto();
     cambiarEstadoBotones();
+    cambiarBotonDeduccion();
 }
-
 function reiniciarValores() {
     puntuacion = 0;
     muestraPuntuacion();
     cambiarImagen(BACK_IMAGE);
-
 }
-if (estadoJuegoDiv !== null &&
-    estadoJuegoDiv !== undefined &&
-    estadoJuegoDiv instanceof HTMLDivElement) {
-    estadoJuegoDiv.textContent = "";
-}
-
 function nuevaPartida() {
     reiniciarValores();
     cambiarEstadoBotones();
     mostrarMensaje(" ");
 }
-
 const nuevaPartidaButton = document.getElementById("nueva-partida");
 if (nuevaPartidaButton !== null &&
     nuevaPartidaButton !== undefined &&
     nuevaPartidaButton instanceof HTMLButtonElement) {
     nuevaPartidaButton.addEventListener('click', nuevaPartida);
+}
+function iniciarPartida() {
+    if (estadoJuegoDiv !== null &&
+        estadoJuegoDiv !== undefined &&
+        estadoJuegoDiv instanceof HTMLDivElement) {
+        estadoJuegoDiv.textContent = "";
+    }
+}
+function obtenerCartaDeducida() {
+    return Math.floor(Math.random() * 10 + 1);
+}
+function queHubieraPasado() {
+    const idCarta = obtenerCartaDeducida();
+    const cartaDeducida = obtenerCarta(idCarta);
+    muestraCarta(cartaDeducida);
+    const puntosDeCarta = puntosPorCarta(idCarta);
+    sumarPuntos(puntosDeCarta);
+    muestraPuntuacion();
+    resultadoDeduccion();
+    cambiarBotonDeduccion();
+}
+const buttonDeduccion = document.getElementById('boton-deduccion');
+if (buttonDeduccion !== null &&
+    buttonDeduccion !== undefined &&
+    buttonDeduccion instanceof HTMLButtonElement) {
+    buttonDeduccion.addEventListener('click', queHubieraPasado);
+}
+function resultadoDeduccion() {
+    if (puntuacion > 7.5) {
+        hubieraPerdido();
+    }
+    else if (puntuacion === 7.5) {
+        hubieraGanado();
+    } else {
+        indiferente();
+    }
+}
+function hubieraGanado() {
+    mostrarMensaje("Hubieras ganado :)");
+    cambiarEstadoBotones();
+}
+function hubieraPerdido() {
+    mostrarMensaje("Te has pasado, hubieras perdido :(");
+    cambiarEstadoBotones();
+}
+function indiferente() {
+    mostrarMensaje("No te hubieras pasado, podrías haber seguido ;)");
+    cambiarEstadoBotones();
 }
