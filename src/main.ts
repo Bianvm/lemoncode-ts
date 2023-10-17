@@ -55,6 +55,7 @@ function partidaPerdida() {
     mostrarMensaje("ohh... Has perdido :(");
     cambiarEstadoBotones();
 }
+const estadoJuegoDiv = document.getElementById('estado-juego');
 const buttonDameCarta = document.getElementById('button-dameCarta');
 if (buttonDameCarta !== null &&
     buttonDameCarta !== undefined &&
@@ -97,7 +98,6 @@ function cambiarImagen(url: string) {
         baraja.src = url;
     }
 }
-const estadoJuegoDiv = document.getElementById('estado-juego');
 const buttonMePlanto = document.getElementById('me-planto');
 if (buttonMePlanto !== null && buttonMePlanto !== null && buttonMePlanto instanceof HTMLButtonElement) {
     buttonMePlanto.addEventListener('click', mePlanto);
@@ -181,7 +181,8 @@ function queHubieraPasado() {
     sumarPuntos(puntosDeCarta);
     muestraPuntuacion();
     resultadoDeduccion();
-    cambiarBotonDeduccion();
+    cambiarEstadoBotones();
+
 }
 const buttonDeduccion = document.getElementById('boton-deduccion');
 if (buttonDeduccion !== null &&
@@ -192,22 +193,26 @@ if (buttonDeduccion !== null &&
 function resultadoDeduccion() {
     if (puntuacion > 7.5) {
         hubieraPerdido();
+        cambiarEstadoBotones();
+        cambiarBotonDeduccion();
     }
     else if (puntuacion === 7.5) {
         hubieraGanado();
+        cambiarEstadoBotones();
+        cambiarBotonDeduccion();
     } else {
         indiferente();
+        cambiarEstadoBotones();
+        cambiarBotonDeduccion();
     }
 }
 function hubieraGanado() {
     mostrarMensaje("Hubieras ganado :)");
-    cambiarEstadoBotones();
 }
 function hubieraPerdido() {
     mostrarMensaje("Te has pasado, hubieras perdido :(");
-    cambiarEstadoBotones();
+
 }
 function indiferente() {
     mostrarMensaje("No te hubieras pasado, podrías haber seguido ;)");
-    cambiarEstadoBotones();
 }
