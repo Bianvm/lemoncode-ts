@@ -55,7 +55,7 @@ function partidaPerdida() {
     mostrarMensaje("ohh... Has perdido :(");
     cambiarEstadoBotones();
 }
-const estadoJuegoDiv = document.getElementById('estado-juego');
+
 const buttonDameCarta = document.getElementById('button-dameCarta');
 if (buttonDameCarta !== null &&
     buttonDameCarta !== undefined &&
@@ -125,6 +125,7 @@ function cambiarBotonDeduccion() {
     }
 }
 function mostrarMensaje(mensaje: string) {
+    const estadoJuegoDiv = document.getElementById('estado-juego');
     if (mensaje && estadoJuegoDiv !== null &&
         estadoJuegoDiv !== undefined &&
         estadoJuegoDiv instanceof HTMLDivElement) {
@@ -164,6 +165,7 @@ if (nuevaPartidaButton !== null &&
     nuevaPartidaButton.addEventListener('click', nuevaPartida);
 }
 function iniciarPartida() {
+    const estadoJuegoDiv = document.getElementById('estado-juego');
     if (estadoJuegoDiv !== null &&
         estadoJuegoDiv !== undefined &&
         estadoJuegoDiv instanceof HTMLDivElement) {
