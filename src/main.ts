@@ -1,220 +1,45 @@
-import "./style.css";
 
-let puntuacion = 0;
-const TOTAL_SCORE_TEXT = "Puntuación total: ";
-const BACK_IMAGE = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg";
-function muestraPuntuacion() {
-    const contadorPuntos = document.getElementById('show-score');
-    if (contadorPuntos !== null &&
-        contadorPuntos !== undefined &&
-        contadorPuntos instanceof HTMLDivElement) {
-        contadorPuntos.textContent = `${TOTAL_SCORE_TEXT} ${puntuacion.toString()}`;
-    }
-}
+import {
+    dameCarta,
+    nuevaPartida,
+    queHubieraPasado,
+    mePlanto,
+} from './motor';
+import {
+    muestraPuntuacion,
+    iniciarPartida,
+    buttonMePlanto,
+    buttonDameCarta,
+    nuevaPartidaButton,
+    buttonDeduccion,
+} from './ui';
 document.addEventListener("DOMContentLoaded", () => {
     iniciarPartida();
-    muestraPuntuacion();
+    muestraPuntuacion(0);
 });
 window.addEventListener('load', function () {
-    muestraPuntuacion();
+    muestraPuntuacion(0);
 });
-function obtenerNumeroDeCarta() {
-    return Math.floor(Math.random() * 10 + 1);
-}
-function obtenerCarta(cartaAleatoria: number) {
-    return cartaAleatoria > 7 ? cartaAleatoria + 2 : cartaAleatoria;
-}
-function dameCarta() {
-    const idCarta = obtenerNumeroDeCarta();
-    const cartaAleatoria = obtenerCarta(idCarta);
-    muestraCarta(cartaAleatoria);
-    const puntosDeCarta = puntosPorCarta(idCarta);
-    sumarPuntos(puntosDeCarta);
-    muestraPuntuacion();
-    gestionarPartida();
-}
-function puntosPorCarta(idCarta: number) {
-    return idCarta > 7 ? 0.5 : idCarta;
-}
-function sumarPuntos(puntosCarta: number) {
-    puntuacion = puntuacion + puntosCarta;
-}
-function gestionarPartida() {
-    if (puntuacion === 7.5) {
-        partidaGanada();
-    }
-    if (puntuacion > 7.5) {
-        partidaPerdida();
-    }
-}
-function partidaGanada() {
-    mostrarMensaje("¡Enhorabuena, has ganado!");
-    cambiarEstadoBotones();
-}
-function partidaPerdida() {
-    mostrarMensaje("ohh... Has perdido :(");
-    cambiarEstadoBotones();
+
+
+if (buttonMePlanto !== null && buttonMePlanto !== null && buttonMePlanto instanceof HTMLButtonElement) {
+    buttonMePlanto.addEventListener('click', mePlanto);
 }
 
-const buttonDameCarta = document.getElementById('button-dameCarta');
 if (buttonDameCarta !== null &&
     buttonDameCarta !== undefined &&
     buttonDameCarta instanceof HTMLButtonElement) {
     buttonDameCarta.addEventListener('click', dameCarta);
 }
-function mapearCartaAImagen(idCarta: number) {
-    switch (idCarta) {
-        case 1:
-            return 'https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/1_as-copas.jpg';
-        case 2:
-            return 'https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/2_dos-copas.jpg';
-        case 3:
-            return 'https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/3_tres-copas.jpg';
-        case 4:
-            return 'https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/4_cuatro-copas.jpg';
-        case 5:
-            return 'https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/5_cinco-copas.jpg';
-        case 6:
-            return 'https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/6_seis-copas.jpg';
-        case 7:
-            return 'https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/7_siete-copas.jpg';
-        case 10:
-            return 'https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/10_sota-copas.jpg';
-        case 11:
-            return 'https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/11_caballo-copas.jpg';
-        case 12:
-            return 'https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/12_rey-copas.jpg'
-        default:
-            return '';
-    }
-}
-function muestraCarta(idCarta: number): void {
-    const imagenCarta = mapearCartaAImagen(idCarta);
-    cambiarImagen(imagenCarta);
-}
-function cambiarImagen(url: string) {
-    const baraja = document.getElementById('boca-abajo');
-    if (baraja !== null && baraja !== undefined && baraja instanceof HTMLImageElement) {
-        baraja.src = url;
-    }
-}
-const buttonMePlanto = document.getElementById('me-planto');
-if (buttonMePlanto !== null && buttonMePlanto !== null && buttonMePlanto instanceof HTMLButtonElement) {
-    buttonMePlanto.addEventListener('click', mePlanto);
-}
-function cambiarEstadoBotones() {
-    if (buttonDameCarta !== null &&
-        buttonDameCarta instanceof HTMLButtonElement) {
-        buttonDameCarta.disabled = !buttonDameCarta.disabled;
-    }
-    if (buttonMePlanto !== null &&
-        buttonMePlanto instanceof HTMLButtonElement) {
-        buttonMePlanto.disabled = !buttonMePlanto.disabled;
-    }
-    if (nuevaPartidaButton !== null &&
-        nuevaPartidaButton !== undefined &&
-        nuevaPartidaButton instanceof HTMLButtonElement) {
-        nuevaPartidaButton.disabled = !nuevaPartidaButton.disabled;
-    }
-}
-function cambiarBotonDeduccion() {
-    if (buttonDeduccion !== null &&
-        buttonDeduccion !== undefined &&
-        buttonDeduccion instanceof HTMLButtonElement) {
-        buttonDeduccion.disabled = !buttonDeduccion.disabled;
-    }
-}
-function mostrarMensaje(mensaje: string) {
-    const estadoJuegoDiv = document.getElementById('estado-juego');
-    if (mensaje && estadoJuegoDiv !== null &&
-        estadoJuegoDiv !== undefined &&
-        estadoJuegoDiv instanceof HTMLDivElement) {
-        estadoJuegoDiv.textContent = mensaje;
-    }
-}
-function ponerTexto() {
-    if (puntuacion >= 6 && puntuacion <= 7) {
-        mostrarMensaje("casi, casi...");
-    } else if (puntuacion === 5) {
-        mostrarMensaje("Te ha entrado el canguelo eh?");
-    } else if (puntuacion <= 4) {
-        mostrarMensaje("Has sido muy conservador");
-    } else if (puntuacion === 7.5) {
-        mostrarMensaje("¡Lo has clavado! ¡Enhorabuena!");
-    }
-}
-function mePlanto() {
-    ponerTexto();
-    cambiarEstadoBotones();
-    cambiarBotonDeduccion();
-}
-function reiniciarValores() {
-    puntuacion = 0;
-    muestraPuntuacion();
-    cambiarImagen(BACK_IMAGE);
-}
-function nuevaPartida() {
-    reiniciarValores();
-    cambiarEstadoBotones();
-    mostrarMensaje(" ");
-}
-const nuevaPartidaButton = document.getElementById("nueva-partida");
+
 if (nuevaPartidaButton !== null &&
     nuevaPartidaButton !== undefined &&
     nuevaPartidaButton instanceof HTMLButtonElement) {
     nuevaPartidaButton.addEventListener('click', nuevaPartida);
 }
-function iniciarPartida() {
-    const estadoJuegoDiv = document.getElementById('estado-juego');
-    if (estadoJuegoDiv !== null &&
-        estadoJuegoDiv !== undefined &&
-        estadoJuegoDiv instanceof HTMLDivElement) {
-        estadoJuegoDiv.textContent = "";
-    }
-}
-function obtenerCartaDeducida() {
-    return Math.floor(Math.random() * 10 + 1);
-}
-function queHubieraPasado() {
-    const idCarta = obtenerCartaDeducida();
-    const cartaDeducida = obtenerCarta(idCarta);
-    muestraCarta(cartaDeducida);
-    const puntosDeCarta = puntosPorCarta(idCarta);
-    sumarPuntos(puntosDeCarta);
-    muestraPuntuacion();
-    resultadoDeduccion();
-    cambiarEstadoBotones();
 
-}
-const buttonDeduccion = document.getElementById('boton-deduccion');
 if (buttonDeduccion !== null &&
     buttonDeduccion !== undefined &&
     buttonDeduccion instanceof HTMLButtonElement) {
     buttonDeduccion.addEventListener('click', queHubieraPasado);
-}
-function resultadoDeduccion() {
-    if (puntuacion > 7.5) {
-        hubieraPerdido();
-        cambiarEstadoBotones();
-        cambiarBotonDeduccion();
-    }
-    else if (puntuacion === 7.5) {
-        hubieraGanado();
-        cambiarEstadoBotones();
-        cambiarBotonDeduccion();
-    } else {
-        indiferente();
-        cambiarEstadoBotones();
-        cambiarBotonDeduccion();
-    }
-}
-function hubieraGanado() {
-    mostrarMensaje("Hubieras ganado :)");
-}
-function hubieraPerdido() {
-    mostrarMensaje("Te has pasado, hubieras perdido :(");
-
-}
-function indiferente() {
-    mostrarMensaje("No te hubieras pasado, podrías haber seguido ;)");
 }
