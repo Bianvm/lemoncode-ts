@@ -1,27 +1,14 @@
 
 import {
     dameCarta,
-    nuevaPartida,
-    queHubieraPasado,
     mePlanto,
-} from './motor';
-import {
-    muestraPuntuacion,
-    iniciarPartida,
-    buttonMePlanto,
-    buttonDameCarta,
-    nuevaPartidaButton,
-    buttonDeduccion,
+    nuevaPartida,
+    queHubieraPasado
 } from './ui';
-document.addEventListener("DOMContentLoaded", () => {
-    iniciarPartida();
-    muestraPuntuacion(0);
-});
-window.addEventListener('load', function () {
-    muestraPuntuacion(0);
-});
-
-
+const buttonMePlanto = document.getElementById('me-planto');
+const buttonDeduccion = document.getElementById('boton-deduccion');
+const buttonDameCarta = document.getElementById('button-dameCarta');
+const nuevaPartidaButton = document.getElementById("nueva-partida");
 if (buttonMePlanto !== null && buttonMePlanto !== null && buttonMePlanto instanceof HTMLButtonElement) {
     buttonMePlanto.addEventListener('click', mePlanto);
 }
