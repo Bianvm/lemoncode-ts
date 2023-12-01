@@ -37,7 +37,7 @@ export function queHubieraPasado() {
     cambiarEstadoBotones();
 
 }
-export function resultadoDeduccion() {
+function resultadoDeduccion() {
     const puntuacion = getPuntuacion();
     if (puntuacion > 7.5) {
         hubieraPerdido();
@@ -59,20 +59,12 @@ export function nuevaPartida() {
     cambiarEstadoBotones();
     mostrarMensaje(" ");
 }
-export function reiniciarValores() {
+function reiniciarValores() {
     setPuntuacion(0);
     muestraPuntuacion(0);
     cambiarImagen(BACK_IMAGE);
 }
 
-export function iniciarPartida() {
-    const estadoJuegoDiv = document.getElementById('estado-juego');
-    if (estadoJuegoDiv !== null &&
-        estadoJuegoDiv !== undefined &&
-        estadoJuegoDiv instanceof HTMLDivElement) {
-        estadoJuegoDiv.textContent = "";
-    }
-}
 export function muestraPuntuacion(puntuacion: number) {
     const contadorPuntos = document.getElementById('show-score');
     if (contadorPuntos !== null &&
@@ -82,7 +74,7 @@ export function muestraPuntuacion(puntuacion: number) {
     }
 }
 
-export function mostrarMensaje(mensaje: string) {
+function mostrarMensaje(mensaje: string) {
     const estadoJuegoDiv = document.getElementById('estado-juego');
     if (mensaje && estadoJuegoDiv !== null &&
         estadoJuegoDiv !== undefined &&
@@ -90,7 +82,7 @@ export function mostrarMensaje(mensaje: string) {
         estadoJuegoDiv.textContent = mensaje;
     }
 }
-export function cambiarEstadoBotones() {
+function cambiarEstadoBotones() {
     const buttonDameCarta = document.getElementById('button-dameCarta');
     if (buttonDameCarta !== null &&
         buttonDameCarta instanceof HTMLButtonElement) {
@@ -108,7 +100,7 @@ export function cambiarEstadoBotones() {
         nuevaPartidaButton.disabled = !nuevaPartidaButton.disabled;
     }
 }
-export function cambiarBotonDeduccion() {
+function cambiarBotonDeduccion() {
     const buttonDeduccion = document.getElementById('boton-deduccion');
     if (buttonDeduccion !== null &&
         buttonDeduccion !== undefined &&
@@ -116,7 +108,7 @@ export function cambiarBotonDeduccion() {
         buttonDeduccion.disabled = !buttonDeduccion.disabled;
     }
 }
-export function gestionarPartida(puntuacion: number) {
+function gestionarPartida(puntuacion: number) {
     if (puntuacion === 7.5) {
         partidaGanada();
     }
@@ -124,11 +116,11 @@ export function gestionarPartida(puntuacion: number) {
         partidaPerdida();
     }
 }
-export function partidaGanada() {
+function partidaGanada() {
     mostrarMensaje("¡Enhorabuena, has ganado!");
     cambiarEstadoBotones();
 }
-export function partidaPerdida() {
+function partidaPerdida() {
     mostrarMensaje("ohh... Has perdido :(");
     cambiarEstadoBotones();
 }
@@ -137,7 +129,7 @@ export function mePlanto() {
     cambiarEstadoBotones();
     cambiarBotonDeduccion();
 }
-export function ponerTexto(puntuacion: number) {
+function ponerTexto(puntuacion: number) {
     if (puntuacion >= 6 && puntuacion <= 7) {
         mostrarMensaje("casi, casi...");
     } else if (puntuacion === 5) {
@@ -148,13 +140,13 @@ export function ponerTexto(puntuacion: number) {
         mostrarMensaje("¡Lo has clavado! ¡Enhorabuena!");
     }
 }
-export function hubieraGanado() {
+function hubieraGanado() {
     mostrarMensaje("Hubieras ganado :)");
 }
-export function hubieraPerdido() {
+function hubieraPerdido() {
     mostrarMensaje("Te has pasado, hubieras perdido :(");
 
 }
-export function indiferente() {
+function indiferente() {
     mostrarMensaje("No te hubieras pasado, podrías haber seguido ;)");
 }

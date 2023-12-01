@@ -22,7 +22,7 @@ export function obtenerNumeroDeCarta() {
 export function sumarPuntos(puntosCarta: number) {
     setPuntuacion(getPuntuacion() + puntosCarta);
 }
-export function mapearCartaAImagen(idCarta: number) {
+function mapearCartaAImagen(idCarta: number) {
     switch (idCarta) {
         case 1:
             return 'https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/1_as-copas.jpg';
