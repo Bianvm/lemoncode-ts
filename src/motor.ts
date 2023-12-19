@@ -1,6 +1,5 @@
 import {
     getPuntuacion,
-    setPuntuacion,
 } from './model';
 
 export function obtenerCarta(cartaAleatoria: number) {
