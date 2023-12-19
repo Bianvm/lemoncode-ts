@@ -8,8 +8,8 @@ import {
     obtenerCarta,
     obtenerNumeroDeCarta,
     puntosPorCarta,
-    muestraCarta,
-    sumarPuntos
+    sumarPuntos,
+    mapearCartaAImagen
 } from "./motor";
 export function dameCarta() {
     const idCarta = obtenerNumeroDeCarta();
@@ -19,6 +19,10 @@ export function dameCarta() {
     sumarPuntos(puntosDeCarta);
     muestraPuntuacion(getPuntuacion());
     gestionarPartida(getPuntuacion());
+}
+export function muestraCarta(idCarta: number): void {
+    const imagenCarta = mapearCartaAImagen(idCarta);
+    cambiarImagen(imagenCarta);
 }
 export function cambiarImagen(url: string) {
     const baraja = document.getElementById('boca-abajo');

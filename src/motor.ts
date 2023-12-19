@@ -1,17 +1,10 @@
 import {
-    cambiarImagen,
-} from './ui';
-import {
     getPuntuacion,
     setPuntuacion,
 } from './model';
 
 export function obtenerCarta(cartaAleatoria: number) {
     return cartaAleatoria > 7 ? cartaAleatoria + 2 : cartaAleatoria;
-}
-export function muestraCarta(idCarta: number): void {
-    const imagenCarta = mapearCartaAImagen(idCarta);
-    cambiarImagen(imagenCarta);
 }
 export function puntosPorCarta(idCarta: number) {
     return idCarta > 7 ? 0.5 : idCarta;
@@ -22,7 +15,7 @@ export function obtenerNumeroDeCarta() {
 export function sumarPuntos(puntosCarta: number) {
     setPuntuacion(getPuntuacion() + puntosCarta);
 }
-function mapearCartaAImagen(idCarta: number) {
+export function mapearCartaAImagen(idCarta: number) {
     switch (idCarta) {
         case 1:
             return 'https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/1_as-copas.jpg';
