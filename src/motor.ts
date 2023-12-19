@@ -13,7 +13,7 @@ export function obtenerNumeroDeCarta() {
     return Math.floor(Math.random() * 10 + 1);
 }
 export function sumarPuntos(puntosCarta: number) {
-    setPuntuacion(getPuntuacion() + puntosCarta);
+    return getPuntuacion() + puntosCarta;
 }
 export function mapearCartaAImagen(idCarta: number) {
     switch (idCarta) {
