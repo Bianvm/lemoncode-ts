@@ -3,6 +3,8 @@ import * as modelo from './model';
 import {
     obtenerEstadoPartida,
     obtenerCarta,
+    sumarPuntos,
+    puntosPorCarta
 } from './motor';
 
 import { describe, vi } from 'vitest';
@@ -29,15 +31,22 @@ describe('./src/motor.ts', () => {
             expect(resultadoEsperado).toBe(resultado);
         })
     })
-    describe('sumarPuntos', () => {
-        it("debería devolver el valor de la carta obtenida en obtenerCarta()", () => {
-            const valor = 0;
-            const resultadoEsperado = valor+2;
-                vi.spyOn(modelo, 'partida', "get").mockReturnValue({
-                    puntuacion: 4
-                })
-            expect(resultadoEsperado).toBe(2);
+    // debemos de haber creado una función que devuelva el valor de esa carta.
+    describe('puntosPorCarta', () => {
+        it("si numeroCarta>7 debería devolver 0.5.", () => {
+            const numeroCarta = 12;
+            const resultadoEsperado = 0.5;
+            const resultado = puntosPorCarta(numeroCarta);
+            expect(resultado).toBe(resultadoEsperado);
+
         })
-    })
+        it("si numeroCarta<7, debería devolver valorCarta=numeroCarta", () => {
+            const numeroCarta = 1;
+            const resultadoEsperado = numeroCarta;
+            const resultado = puntosPorCarta(numeroCarta);
+            expect(resultado).toBe(resultadoEsperado);
+
+        })
+    }) //
 })
 
