@@ -42,7 +42,7 @@ export function mapearCartaAImagen(idCarta: number) {
 }
 export function obtenerEstadoPartida (): EstadoPartida {
  if (partida.puntuacion === 7.5){
-    return "JUSTO_MAXIMA"
+    return "HAS_ACERTADO"
  }
  if (partida.puntuacion >7.5){
     return "TE_HAS_PASADO"

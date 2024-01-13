@@ -4,13 +4,24 @@ import {
     obtenerCarta,
     puntosPorCarta
 } from './motor';
-
 import { describe, vi } from 'vitest';
 describe('./src/motor.ts', () => {
     describe('obtenerEstadoPartida', () => {
         it("debería devolver POR_DEBAJO_MAXIMO puntuación < 7.5", () => {
             const estadoEsperado: EstadoPartida = 'POR_DEBAJO_MAXIMO';
             vi.spyOn(partida, 'puntuacion', "get").mockReturnValue(1);
+            const resultado = obtenerEstadoPartida()
+            expect(resultado).toBe(estadoEsperado);
+        })
+        it("debería devolver TE_HAS_PASADO puntuación > 7.5", () => {
+            const estadoEsperado: EstadoPartida = 'TE_HAS_PASADO';
+            vi.spyOn(partida, 'puntuacion', "get").mockReturnValue(8);
+            const resultado = obtenerEstadoPartida()
+            expect(resultado).toBe(estadoEsperado);
+        })
+        it("debería devolver TE_HAS_PASADO puntuación === 7.5", () => {
+            const estadoEsperado: EstadoPartida = 'HAS_ACERTADO';
+            vi.spyOn(partida, 'puntuacion', "get").mockReturnValue(7.5);
             const resultado = obtenerEstadoPartida()
             expect(resultado).toBe(estadoEsperado);
         })
@@ -29,7 +40,6 @@ describe('./src/motor.ts', () => {
             expect(resultadoEsperado).toBe(resultado);
         })
     })
-    // debemos de haber creado una función que devuelva el valor de esa carta.
     describe('puntosPorCarta', () => {
         it("si numeroCarta>7 debería devolver 0.5.", () => {
             const numeroCarta = 12;
@@ -45,6 +55,6 @@ describe('./src/motor.ts', () => {
             expect(resultado).toBe(resultadoEsperado);
 
         })
-    }) //
+    })
 })
 

@@ -8,5 +8,5 @@ export const setPuntuacion = (nuevaPuntuacion: number) => {
 //interfaz estado partida
 export type EstadoPartida =
   | "POR_DEBAJO_MAXIMO"
-  | "JUSTO_MAXIMA"
+  | "HAS_ACERTADO"
   | "TE_HAS_PASADO";
