@@ -1,9 +1,7 @@
 import { EstadoPartida, partida } from './model';
-import * as modelo from './model';
 import {
     obtenerEstadoPartida,
     obtenerCarta,
-    sumarPuntos,
     puntosPorCarta
 } from './motor';
 
