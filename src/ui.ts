@@ -17,7 +17,8 @@ export function dameCarta() {
     const cartaAleatoria = obtenerCarta(idCarta);
     muestraCarta(cartaAleatoria);
     const puntosDeCarta = puntosPorCarta(idCarta);
-    sumarPuntos(puntosDeCarta);
+    const nuevaPuntuacion = sumarPuntos(puntosDeCarta);
+    setPuntuacion(nuevaPuntuacion);
     muestraPuntuacion(partida.puntuacion);
     gestionarPartida();
 }
