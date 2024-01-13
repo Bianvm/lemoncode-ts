@@ -1,18 +1,18 @@
 import {
-    getPuntuacion,
+    partida, EstadoPartida
 } from './model';
 
 export function obtenerCarta(cartaAleatoria: number) {
     return cartaAleatoria > 7 ? cartaAleatoria + 2 : cartaAleatoria;
 }
-export function puntosPorCarta(idCarta: number) {
+export function puntosPorCarta(idCarta: number) { 
     return idCarta > 7 ? 0.5 : idCarta;
 }
-export function obtenerNumeroDeCarta() {
+export function obtenerNumeroDeCarta() { 
     return Math.floor(Math.random() * 10 + 1);
 }
-export function sumarPuntos(puntosCarta: number) {
-    return getPuntuacion() + puntosCarta;
+export function sumarPuntos(puntosCarta: number) { //esta
+    return partida.puntuacion + puntosCarta;
 }
 export function mapearCartaAImagen(idCarta: number) {
     switch (idCarta) {
@@ -39,4 +39,13 @@ export function mapearCartaAImagen(idCarta: number) {
         default:
             return '';
     }
+}
+export function obtenerEstadoPartida (): EstadoPartida {
+ if (partida.puntuacion === 7.5){
+    return "JUSTO_MAXIMA"
+ }
+ if (partida.puntuacion >7.5){
+    return "TE_HAS_PASADO"
+ }
+ return "POR_DEBAJO_MAXIMO"
 }

@@ -1,7 +1,7 @@
 import {
     TOTAL_SCORE_TEXT,
     BACK_IMAGE,
-    getPuntuacion,
+    partida,
     setPuntuacion,
 } from "./model";
 import {
@@ -9,7 +9,8 @@ import {
     obtenerNumeroDeCarta,
     puntosPorCarta,
     sumarPuntos,
-    mapearCartaAImagen
+    mapearCartaAImagen,
+    obtenerEstadoPartida
 } from "./motor";
 export function dameCarta() {
     const idCarta = obtenerNumeroDeCarta();
@@ -17,8 +18,8 @@ export function dameCarta() {
     muestraCarta(cartaAleatoria);
     const puntosDeCarta = puntosPorCarta(idCarta);
     sumarPuntos(puntosDeCarta);
-    muestraPuntuacion(getPuntuacion());
-    gestionarPartida(getPuntuacion());
+    muestraPuntuacion(partida.puntuacion);
+    gestionarPartida();
 }
 export function muestraCarta(idCarta: number): void {
     const imagenCarta = mapearCartaAImagen(idCarta);
@@ -36,13 +37,13 @@ export function queHubieraPasado() {
     muestraCarta(cartaDeducida);
     const puntosDeCarta = puntosPorCarta(idCarta);
     sumarPuntos(puntosDeCarta);
-    muestraPuntuacion(getPuntuacion());
+    muestraPuntuacion(partida.puntuacion);
     resultadoDeduccion();
     cambiarEstadoBotones();
 
 }
 function resultadoDeduccion() {
-    const puntuacion = getPuntuacion();
+    const puntuacion = partida.puntuacion;
     if (puntuacion > 7.5) {
         hubieraPerdido();
         cambiarEstadoBotones();
@@ -77,9 +78,8 @@ export function muestraPuntuacion(puntuacion: number) {
         contadorPuntos.textContent = `${TOTAL_SCORE_TEXT} ${puntuacion.toString()}`;
     }
 }
-
+export const estadoJuegoDiv = document.getElementById('estado-juego');
 function mostrarMensaje(mensaje: string) {
-    const estadoJuegoDiv = document.getElementById('estado-juego');
     if (mensaje && estadoJuegoDiv !== null &&
         estadoJuegoDiv !== undefined &&
         estadoJuegoDiv instanceof HTMLDivElement) {
@@ -112,24 +112,24 @@ function cambiarBotonDeduccion() {
         buttonDeduccion.disabled = !buttonDeduccion.disabled;
     }
 }
-function gestionarPartida(puntuacion: number) {
-    if (puntuacion === 7.5) {
+export function gestionarPartida() {
+    if (obtenerEstadoPartida() === "JUSTO_MAXIMA") {
         partidaGanada();
     }
-    if (puntuacion > 7.5) {
+    if (obtenerEstadoPartida() === "TE_HAS_PASADO") {
         partidaPerdida();
     }
 }
-function partidaGanada() {
+export function partidaGanada() {
     mostrarMensaje("¡Enhorabuena, has ganado!");
     cambiarEstadoBotones();
 }
-function partidaPerdida() {
+export function partidaPerdida() {
     mostrarMensaje("ohh... Has perdido :(");
     cambiarEstadoBotones();
 }
 export function mePlanto() {
-    ponerTexto(getPuntuacion());
+    ponerTexto(partida.puntuacion);
     cambiarEstadoBotones();
     cambiarBotonDeduccion();
 }
