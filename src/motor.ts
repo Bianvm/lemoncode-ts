@@ -5,10 +5,10 @@ import {
 export function obtenerCarta(cartaAleatoria: number) {
     return cartaAleatoria > 7 ? cartaAleatoria + 2 : cartaAleatoria;
 }
-export function puntosPorCarta(idCarta: number) { 
+export function puntosPorCarta(idCarta: number) {
     return idCarta > 7 ? 0.5 : idCarta;
 }
-export function obtenerNumeroDeCarta() { 
+export function obtenerNumeroDeCarta() {
     return Math.floor(Math.random() * 10 + 1);
 }
 export function sumarPuntos(puntosCarta: number) { //esta
@@ -40,12 +40,9 @@ export function mapearCartaAImagen(idCarta: number) {
             return '';
     }
 }
-export function obtenerEstadoPartida (): EstadoPartida {
- if (partida.puntuacion === 7.5){
-    return "HAS_ACERTADO"
- }
- if (partida.puntuacion >7.5){
-    return "TE_HAS_PASADO"
- }
- return "POR_DEBAJO_MAXIMO"
+export function obtenerEstadoPartida(): EstadoPartida {
+    if (partida.puntuacion === 7.5) {
+        return "HAS_ACERTADO"
+    }
+    return partida.puntuacion > 7.5 ? 'TE_HAS_PASADO' : 'POR_DEBAJO_MAXIMO';
 }
