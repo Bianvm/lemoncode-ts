@@ -96,19 +96,19 @@ interface Paciente {
   }; //console.log(obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios(pacientes));
   
   
-  //activar el protocolo de urgencia si cualquier de los pacientes tiene un ritmo cardíaco superior a 100 pulsaciones por minuto y una temperatura corporal superior a 39 grados crear una función que devuelve true/false dependiendo si se da la condición
-  const activarProtocoloUrgencia = (pacientes: Paciente[]): boolean => {
-    let requisitosProtocolodeUrgencias = false;
+//activar el protocolo de urgencia si cualquier de los pacientes tiene un ritmo cardíaco superior a 100 pulsaciones por minuto y una temperatura corporal superior a 39 grados crear una función que devuelve true/false dependiendo si se da la condición
+ const activarProtocoloUrgencia = (pacientes: Paciente[]): boolean => {
     for (let i = 0; i < pacientes.length; i++) {
-  
-      pacientes[i].frecuenciaCardiaca > 100 && pacientes[i].temperatura > 39 ?
-        requisitosProtocolodeUrgencias = true :
-        false;
+        if (pacientes[i].frecuenciaCardiaca > 100 && pacientes[i].temperatura > 39) {
+        return true;
+        }
+    }  return false;
+};
   
     } return requisitosProtocolodeUrgencias;
   }; //console.log(activarProtocoloUrgencia(pacientes));
   
-  // reasignar los pacientes asignados a la especialidad de pediatría a la de medico de familia.
+ // reasignar los pacientes asignados a la especialidad de pediatría a la de medico de familia.
   const reasignaPacientesAMedicoFamilia = (pacientes: Paciente[]): Paciente[] => {
     const reasignacionPediatraAMedicoDeFamilia: Paciente[] = [];
     for (let i = 0; i < pacientes.length; i++) {
@@ -121,13 +121,14 @@ interface Paciente {
   }; //console.log(reasignaPacientesAMedicoFamilia(pacientes));
   
   
-  //comprobar si en la lista hay algún paciente asignado a pediatría
-  const HayPacientesDePediatria = (pacientes: Paciente[]): boolean => {
-    let pacienteDePediatria = false;
+ //comprobar si en la lista hay algún paciente asignado a pediatría
+ const hayPacientesDePediatria = (pacientes: Paciente[]): boolean => {
     for (let i = 0; i < pacientes.length; i++) {
-      pacientes[i].especialidad === "Pediatra" ? pacienteDePediatria = true : false;
-    } return pacienteDePediatria;
-  }; //console.log(HayPacientesDePediatria(pacientes));
+        if (pacientes[i].especialidad === "Pediatra") { 
+            return true;
+        }
+    } return false;
+}; //console.log(HayPacientesDePediatria(pacientes));
   
   //calcular el número total de pacientes que están asignados a la especialidad de Medico de familia, y lo que están asignados a Pediatría y a cardiología
   interface NumeroPacientesPorEspecialidad {
