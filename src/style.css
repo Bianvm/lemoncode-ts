@@ -36,6 +36,18 @@ h1 {
   line-height: 1.1;
 }
 
+.card-select {  
+  margin-top: 50px;
+  margin-right: 25px;
+  margin-bottom: 50px;
+  margin-left: 25px;
+  padding: 25px;
+  background-color: rgba(5, 253, 245, 0.401);
+  border: 5px solid rgba(0, 0, 255, 0.769);
+  border-radius: 30px;
+  cursor: pointer;
+}
+
 #app {
   max-width: 1280px;
   margin: 0 auto;
@@ -56,12 +68,14 @@ h1 {
   filter: drop-shadow(0 0 2em #3178c6aa);
 }
 
-.card {
-  padding: 2em;
-}
 
 .read-the-docs {
   color: #888;
+}
+
+.card__image {
+  width: 100%;
+  height: 128px;
 }
 
 button {
