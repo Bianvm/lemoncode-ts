@@ -1,5 +1,4 @@
-const backCard = document.getElementById("cardContainer1");
-
+/*const backCard = document.getElementById("backCardContainer");
 const LION_IMAGE =
   "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/memo/1.png";
 
@@ -16,4 +15,4 @@ function changeToAnimalImg() {
   }
 }
 
-backCard?.addEventListener("click", changeToAnimalImg);
+backCard?.addEventListener("click", changeToAnimalImg);*/
