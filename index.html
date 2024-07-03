@@ -11,17 +11,31 @@
 <body>
   <div id="app" class="container">
     <h3 class="text1"> Juego de memoria</h3>
-
-
+    <div class="botonEmpezarPartida"><button id="boton-empezar-partida" class="boton-empezar-partida">Empezar
+        partida</button>
+    </div>
+    <div class="botonReiniciarPartida"> <button id="reiniciar-partida" disabled class="reiniciar-partida">Volver a
+        empezar</button></div>
 
     <div class="animalsCardsContainer">
-      <div id="lion-image"><img id="card1" class="card__image1"
-          src=""></div>
-      <div id="owl-image"><img id="card2" class="card__image2"
-          src=""></div>
+      <div class="wrapper hidden" data-indice-id="0"><img class="card__image" src=""></div>
+      <div class="wrapper hidden" data-indice-id="1"><img class="card__image" src=""></div>
+      <div class="wrapper hidden" data-indice-id="2"><img class="card__image" src=""></div>
+      <div class="wrapper hidden" data-indice-id="3"> <img class="card__image" src=""></div>
+      <div class="wrapper hidden" data-indice-id="4"> <img class="card__image1" src=""></div>
+      <div class="wrapper hidden" data-indice-id="5"> <img class="card__image1" src=""></div>
+      <div class="wrapper hidden" data-indice-id="6"> <img class="card__image1" src=""></div>
+      <div class="wrapper hidden" data-indice-id="7"> <img class="card__image1" src=""></div>
+      <div class="wrapper hidden" data-indice-id="8"> <img class="card__image1" src=""></div>
+      <div class="wrapper hidden" data-indice-id="9"> <img class="card__image1" src=""></div>
+      <div class="wrapper hidden" data-indice-id="10"> <img class="card__image1" src=""></div>
+      <div class="wrapper hidden" data-indice-id="11"> <img class="card__image1" src=""></div>
     </div>
+    <div id="estado-partida" class="fin-partida"></div>
   </div>
-  </div>
+
+
+
   <script type="module" src="/src/main.ts" src="/src/prueba-de-concepto2/show-and-flip.ts"></script>
 </body>
 
