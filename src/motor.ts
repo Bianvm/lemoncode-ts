@@ -18,7 +18,7 @@ const sePuedeVoltearLaCarta = (tablero: Tablero, indice: number): boolean => {
   const cartas = tablero.cartas;
   const cartasVolteadas = cartas.filter((c) => c.estaVuelta);
   if (cartasVolteadas.length === 2) {
-    //Una carta no se puede voltear si no hay dos cartas ya volteadas
+    //Una carta no se puede voltear si ya hay dos cartas ya volteadas
     return false;
   }
   const cartaActual = cartas[indice];
@@ -31,7 +31,6 @@ const sePuedeVoltearLaCarta = (tablero: Tablero, indice: number): boolean => {
 
 export const voltearLaCarta = (tablero: Tablero, indice: number): void => {
   const sePuedeVoltear = sePuedeVoltearLaCarta(tablero, indice); //primero comprueba llamando a la funcion sePuedevoltear
-
   if (sePuedeVoltear) {
     //si se puede voltear->
     tablero.cartas[indice].estaVuelta = true; //se voltea la carta con el índice indicado
@@ -72,8 +71,6 @@ export const voltearLaCarta = (tablero: Tablero, indice: number): void => {
     }
     tablero.estadoPartida = "CeroCartasLevantadas"; //tanto si se encuentra la pareja como si no, el estado siempre es CeroCartasLevantadas(estado inicial) para continuar el juego.
   }
-
-  // comprobar si hay dos volteadas, si hay dos volteadas mirar si son pareja. Si son pareja llamar a pareja encontrada, sino a parejaNoEncontrada
 };
 /*
         Dos cartas son pareja si en el array de tablero de cada una tienen el mismo id
@@ -103,7 +100,7 @@ const parejaEncontrada = (
   tablero.cartas[indiceB].estaVuelta = false;
   const terminada = esPartidaCompleta(tablero); //llama a la función partida completa
   if (terminada) {
-    //en caso de que la aprtida haya terminado:
+    //en caso de que la partida haya terminado:
     mostrarMensajeFinDePartida("Fin de Partida");
     tablero.estadoPartida = "PartidaCompleta";
   } else {
@@ -125,7 +122,7 @@ const parejaNoEncontrada = (
   tablero.cartas[indiceA].estaVuelta = false; //se asigna el valor false para que se oculten
   tablero.cartas[indiceB].estaVuelta = false;
   tablero.estadoPartida = "CeroCartasLevantadas";
-  tablero.indiceCartaVolteadaA = undefined; //se ponene como indefinidos porque se resetean, no tienen niguna selección
+  tablero.indiceCartaVolteadaA = undefined; //se ponene como indice=undefined porque se resetean y no tienen niguna selección
   tablero.indiceCartaVolteadaB = undefined;
 };
 
