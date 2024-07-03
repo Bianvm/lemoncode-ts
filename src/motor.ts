@@ -132,7 +132,7 @@ const parejaNoEncontrada = (
 export const esPartidaCompleta = (tablero: Tablero): boolean => {
   const cartas = tablero.cartas;
   const todasEncontradas = cartas.every((cartas) => cartas.encontrada); //si todas las cartas están encontradas
-  return todasEncontradas; //devuelve todas la partida está completa
+  return todasEncontradas; //devuelve todas, la partida está completa
 };
 
 /*
