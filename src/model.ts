@@ -42,38 +42,22 @@ const infoCartas: InfoCarta[] = [
       "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/memo/6.png",
   },
 ];
-/*const crearCartaInicial = (idCarta: number, imgUrl: string): Carta => ({
-  idCarta,
-  imgUrl,
+const crearCartaInicial = (carta: InfoCarta): Carta => ({
+  idCarta: carta.idImg,
+  imgUrl: carta.imgUrl,
   estaVuelta: false,
   encontrada: false,
-});*/
+});
 
-function repetirCartas(infoCartas: InfoCarta[], vecesARepepetir: number = 2) {
-  //función que crea el array con las cartas repetidas y nuevos atributos
-  let cards: Carta[] = []; //crea un array vacío carta:Carta[]->interfaz
-  for (let i = 0; i < vecesARepepetir; i++) {
-    //repite los elementos del array
-    cards = [
-      ...cards, //en el array cards se copia lo que ya había en el array carta:Carta[]
-      ...infoCartas.map((c) => ({
-        //mapeamos el contenido de Infocard[] para añadirlo al array cards:carta[]
-        idCarta: c.idImg,
-        imgUrl: c.imgUrl,
-        estaVuelta: false,
-        encontrada: false,
-      })),
-    ];
-  }
-  return cards; //devuelve el nuevo array
-}
-
-const crearColeccionDeCartasInicial = (infoCartas: InfoCarta[]): Carta[] => {
-  //nuevo array que recibe los parámetros de infocards:InfoCartas[] y cards:Cartas[] y los valores repetidos
-  return repetirCartas(infoCartas); //devuelve la función que repite los elementos del array
+const crearColeccionDeCartasRepetidas = (infoCartas: InfoCarta[]): Carta[] => {
+  //   nuevo array que recibe los parámetros de infocards:InfoCartas[] y cards:Cartas[] y los valores repetidos
+  //   return repetirCartas(infoCartas); //devuelve la función que repite los elementos del array
+  const cartasMapeadas = infoCartas.map(crearCartaInicial);
+  return [
+    ...structuredClone(cartasMapeadas), // usamos structuredClone para una copia profunda, por cada array que se quiere copiar. Evita la misma dirección de memoria
+    ...structuredClone(cartasMapeadas),
+  ];
 };
-
-// export const cartas: Carta[] = crearColeccionDeCartasInicial(infoCartas); // creamos un nuevo array para las cartas del tablero que toma los valores de la función crearColeccionDeCartasInicial.
 
 type EstadoPartida =
   | "PartidaNoIniciada"
@@ -89,13 +73,13 @@ export interface Tablero {
   indiceCartaVolteadaB?: number;
 }
 const crearTableroInicial = (): Tablero => ({
-  cartas: crearColeccionDeCartasInicial(infoCartas),
+  cartas: crearColeccionDeCartasRepetidas(infoCartas),
   estadoPartida: "PartidaNoIniciada", //estado inicial de la partida
 });
 
 export const recrearTablero = () => {
   tablero = {
-    cartas: crearColeccionDeCartasInicial(infoCartas),
+    cartas: crearColeccionDeCartasRepetidas(infoCartas),
     estadoPartida: "CeroCartasLevantadas",
   };
 };
