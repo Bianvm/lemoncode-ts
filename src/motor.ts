@@ -1,5 +1,5 @@
 import { Carta, Tablero } from "./model";
-
+import { mostrarMensajeFinDePartida } from "./ui";
 const obtenerNumeroAleatorio = () => {
   return Math.floor(Math.random() * 2);
 };
@@ -99,14 +99,12 @@ export const parejaEncontrada = (
   tablero.cartas[indiceB].estaVuelta = true;
   tablero.indiceCartaVolteadaA = undefined; //se ponene como indice=undefined porque se resetean y no tienen niguna selección
   tablero.indiceCartaVolteadaB = undefined;
-  if (esPartidaCompleta(tablero)) {
+  if (esPartidaCompleta(tablero)) {   // comprobar si se ha terminado el juego y cambiar el estado en función de ello
     mostrarMensajeFinDePartida("Partida terminada");
     tablero.estadoPartida = "PartidaCompleta";
   } else {
     tablero.estadoPartida = "CeroCartasLevantadas";
   }
-
-  // comprobar si se ha terminado el juego y cambiar el estado en función de ello
 };
 
 /*
@@ -144,16 +142,3 @@ export const iniciaPartida = (tablero: Tablero): void => {
   tablero.estadoPartida = "CeroCartasLevantadas";
   barajarCartas(cartas);
 };
-
-export function mostrarMensajeFinDePartida(mensaje: string) {
-  const estadoJuegoDiv = document.getElementById("estado-partida");
-  if (
-    mensaje &&
-    estadoJuegoDiv !== null &&
-    estadoJuegoDiv !== undefined &&
-    estadoJuegoDiv instanceof HTMLDivElement
-  ) {
-    estadoJuegoDiv.style.display = "block";
-    estadoJuegoDiv.textContent = mensaje;
-  }
-}

@@ -8,7 +8,6 @@ import {
   esPartidaCompleta,
   parejaEncontrada,
   parejaNoEncontrada,
-  mostrarMensajeFinDePartida,
 } from "./motor";
 
 const botonInicioPartida = document.getElementById("boton-empezar-partida");
@@ -46,7 +45,18 @@ function ocultarEstadoFinDePartida() {
     estadoJuegoDiv.style.display = "none";
   }
 }
-
+export function mostrarMensajeFinDePartida(mensaje: string) {
+  const estadoJuegoDiv = document.getElementById("estado-partida");
+  if (
+    mensaje &&
+    estadoJuegoDiv !== null &&
+    estadoJuegoDiv !== undefined &&
+    estadoJuegoDiv instanceof HTMLDivElement
+  ) {
+    estadoJuegoDiv.style.display = "block";
+    estadoJuegoDiv.textContent = mensaje;
+  }
+}
 export function reiniciarPartidaHandler() {
   recrearTablero();
   barajarCartas(tablero.cartas);
@@ -114,7 +124,7 @@ for (let i = 0; i < cardImage.length; i++) {
     ) {
       return;
     }
-    // event.target devuelve el elemento sobre el que se ha hecho click
+    // event.target devuelve el elemento sobre el que se ha hecho la interacción click
     const target = event.target;
     if (target instanceof HTMLElement) {
       const id = parseInt(target.getAttribute("data-indice-id") ?? "");
