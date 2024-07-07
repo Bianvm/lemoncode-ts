@@ -29,10 +29,22 @@ const cambiarEstadoBoton = (boton: HTMLElement | null, callback: Function) => {
 const iniciarPartidaHandler = () => {
   cambiarEstadoBoton(botonInicioPartida, () => iniciaPartida(tablero));
   cambiarEstadoBoton(botonReiniciarPartida, () => null);
+  mostrarMensajeFinDePartida("¡Suerte!");
 };
 
 export function cambiarBotonIniciarPartida() {
   cambiarEstadoBoton(botonInicioPartida, () => null);
+}
+
+function ocultarEstadoFinDePartida() {
+  const estadoJuegoDiv = document.getElementById("estado-partida");
+  if (
+    estadoJuegoDiv !== null &&
+    estadoJuegoDiv !== undefined &&
+    estadoJuegoDiv instanceof HTMLDivElement
+  ) {
+    estadoJuegoDiv.style.display = "none";
+  }
 }
 
 export function reiniciarPartidaHandler() {
@@ -40,6 +52,7 @@ export function reiniciarPartidaHandler() {
   barajarCartas(tablero.cartas);
   ocultarCartas();
   actualizarTablero();
+  ocultarEstadoFinDePartida();
 }
 
 const actualizarTablero = () => {

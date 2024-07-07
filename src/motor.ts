@@ -153,17 +153,7 @@ export function mostrarMensajeFinDePartida(mensaje: string) {
     estadoJuegoDiv !== undefined &&
     estadoJuegoDiv instanceof HTMLDivElement
   ) {
+    estadoJuegoDiv.style.display = "block";
     estadoJuegoDiv.textContent = mensaje;
-  }
-}
-export function ocultarEstadoFinDePartida(mensaje: string) {
-  const estadoJuegoDiv = document.getElementById("estado-partida");
-  if (
-    mensaje &&
-    estadoJuegoDiv !== null &&
-    estadoJuegoDiv !== undefined &&
-    estadoJuegoDiv instanceof HTMLDivElement
-  ) {
-    estadoJuegoDiv.textContent = "";
   }
 }
