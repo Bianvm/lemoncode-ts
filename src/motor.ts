@@ -39,38 +39,6 @@ export const voltearLaCarta = (tablero: Tablero, indice: number): void => {
   }
 };
 
-const cartasVolteadas = (tablero: Tablero): void => {
-  tablero.cartas.filter((c: Carta) => c.estaVuelta);
-  {
-    //filtramos que cumplan la condición estaVuelta
-    if (
-      cartasVolteadas.length === 2 &&
-      tablero.indiceCartaVolteadaA != undefined &&
-      tablero.indiceCartaVolteadaB != undefined
-    ) {
-      if (
-        sonPareja(
-          tablero.indiceCartaVolteadaA,
-          tablero.indiceCartaVolteadaB,
-          tablero
-        )
-      ) {
-        parejaEncontrada(
-          tablero,
-          tablero.indiceCartaVolteadaA,
-          tablero.indiceCartaVolteadaB
-        );
-      } else {
-        parejaNoEncontrada(
-          tablero,
-          tablero.indiceCartaVolteadaA,
-          tablero.indiceCartaVolteadaB
-        );
-      }
-      tablero.estadoPartida = "CeroCartasLevantadas"; //tanto si se encuentra la pareja como si no, el estado siempre es CeroCartasLevantadas(estado inicial) para continuar el juego.
-    }
-  }
-};
 /*
         Dos cartas son pareja si en el array de tablero de cada una tienen el mismo id
       */
@@ -99,8 +67,11 @@ export const parejaEncontrada = (
   tablero.cartas[indiceB].estaVuelta = true;
   tablero.indiceCartaVolteadaA = undefined; //se ponene como indice=undefined porque se resetean y no tienen niguna selección
   tablero.indiceCartaVolteadaB = undefined;
-  if (esPartidaCompleta(tablero)) {   // comprobar si se ha terminado el juego y cambiar el estado en función de ello
-    mostrarMensajeFinDePartida("Partida terminada");
+  if (esPartidaCompleta(tablero)) {
+    // comprobar si se ha terminado el juego y cambiar el estado en función de ello
+    mostrarMensajeFinDePartida(
+      "¡Enhorabuena, has encontrado todas las parejas!"
+    );
     tablero.estadoPartida = "PartidaCompleta";
   } else {
     tablero.estadoPartida = "CeroCartasLevantadas";

@@ -12,7 +12,6 @@ import {
 
 const botonInicioPartida = document.getElementById("boton-empezar-partida");
 const botonReiniciarPartida = document.getElementById("reiniciar-partida");
-const cardImage = document.getElementsByClassName("wrapper");
 
 const cambiarEstadoBoton = (boton: HTMLElement | null, callback: Function) => {
   if (
@@ -33,6 +32,12 @@ const iniciarPartidaHandler = () => {
 
 export function cambiarBotonIniciarPartida() {
   cambiarEstadoBoton(botonInicioPartida, () => null);
+}
+if (botonInicioPartida && botonInicioPartida instanceof HTMLElement) {
+  botonInicioPartida.addEventListener("click", iniciarPartidaHandler);
+}
+if (botonReiniciarPartida && botonReiniciarPartida instanceof HTMLElement) {
+  botonReiniciarPartida.addEventListener("click", reiniciarPartidaHandler);
 }
 
 function ocultarEstadoFinDePartida() {
@@ -111,32 +116,26 @@ const mostrarImagen = (indiceCarta: number) => {
   }
 };
 
-botonInicioPartida?.addEventListener("click", iniciarPartidaHandler);
-botonReiniciarPartida?.addEventListener("click", reiniciarPartidaHandler);
+const cargarTablero = () => {
+  for (let i = 0; i < tablero.cartas.length; i++) {
+    const dataIndiceId = `[data-indice-id="${i}"]`;
+    const elementoCarta = document.querySelector(`div${dataIndiceId}`);
+    if (elementoCarta && elementoCarta instanceof HTMLDivElement) {
+      elementoCarta.addEventListener("click", () => {
+        if (sePuedeVoltearLaCarta(tablero, i)) {
+          voltearLaCarta(tablero, i);
+          mostrarImagen(i);
+          comprobarQueSonPareja();
+        } else {
+          console.log("no se puede dar la vuelta a la carta");
+        }
+      });
+    }
+  }
+};
 
-for (let i = 0; i < cardImage.length; i++) {
-  const card = cardImage.item(i);
-  card?.addEventListener("click", (event) => {
-    if (
-      tablero.estadoPartida === "PartidaNoIniciada" ||
-      tablero.estadoPartida === "PartidaCompleta" ||
-      tablero.estadoPartida === "DosCartasLevantadas"
-    ) {
-      return;
-    }
-    // event.target devuelve el elemento sobre el que se ha hecho la interacción click
-    const target = event.target;
-    if (target instanceof HTMLElement) {
-      const id = parseInt(target.getAttribute("data-indice-id") ?? "");
-      if (sePuedeVoltearLaCarta(tablero, i)) {
-        voltearLaCarta(tablero, id);
-        mostrarImagen(i);
-        actualizarTablero();
-        comprobarQueSonPareja();
-      }
-    }
-  });
-}
+document.addEventListener("DOMContentLoaded", cargarTablero);
+
 const comprobarQueSonPareja = () => {
   const indiceA = tablero.indiceCartaVolteadaA;
   const indiceB = tablero.indiceCartaVolteadaB;
