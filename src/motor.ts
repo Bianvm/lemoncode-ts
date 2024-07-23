@@ -41,7 +41,7 @@ const validarClave = (
 };
 //La clave debe de tener mayúsculas y minúsculas.
 
-const tieneMayusculasYMinusculas = (clave: string): ValidacionClave => {
+export const tieneMayusculasYMinusculas = (clave: string): ValidacionClave => {
   const tieneMayuscula = !!clave.match(MAYUS_REGEX);
   const tieneMinuscula = !!clave.match(MINUS_REGEX);
   const esValido = tieneMayuscula && tieneMinuscula;
@@ -52,7 +52,7 @@ const tieneMayusculasYMinusculas = (clave: string): ValidacionClave => {
 };
 
 //La clave debe de tener números.
-const tieneNumeros = (clave: string): ValidacionClave => {
+export const tieneNumeros = (clave: string): ValidacionClave => {
   const tieneNumero = !!clave.match(NUMBER_REGEX);
   const esValido = tieneNumero;
   return {
@@ -61,7 +61,7 @@ const tieneNumeros = (clave: string): ValidacionClave => {
   };
 };
 //La clave debe de tener caracteres especiales (@,#,+, _, ...)
-const tieneCaracteresEspeciales = (clave: string): ValidacionClave => {
+export const tieneCaracteresEspeciales = (clave: string): ValidacionClave => {
   const tieneCaracteresEspeciales = !!clave.match(SPECIAL_CHARACTER_REYEX);
   const esValido = tieneCaracteresEspeciales;
   return {
@@ -71,7 +71,7 @@ const tieneCaracteresEspeciales = (clave: string): ValidacionClave => {
 };
 
 //La clave debe de tener una longitud mínima de 8 caracteres.
-const tieneLongitudMinima = (clave: string): ValidacionClave => {
+export const tieneLongitudMinima = (clave: string): ValidacionClave => {
   const esValido = clave.length >= LONGITUD_MINIMA;
 
   return {
@@ -82,7 +82,7 @@ const tieneLongitudMinima = (clave: string): ValidacionClave => {
   };
 };
 //La clave no debe tener el nombre del usuario.
-const tieneNombreUsuario = (
+export const tieneNombreUsuario = (
   nombreUsuario: string,
   clave: string
 ): ValidacionClave => {
@@ -94,7 +94,7 @@ const tieneNombreUsuario = (
   };
 };
 //La clave no debe de contener palabras comunes (le pasaremos un array de palabras comunes).
-const tienePalabrasComunes = (
+export const tienePalabrasComunes = (
   clave: string,
   commonPasswords: string[]
 ): ValidacionClave => {
@@ -102,9 +102,10 @@ const tienePalabrasComunes = (
     //filtrar las contraseñas que tienen parte de las señas comunes
     return clave.toLowerCase().includes(commonPassword.toLowerCase());
   });
+
   const esValido = contraseñaNoValido.length === 0;
   return {
-    esValida: true,
+    esValida: esValido,
     error: esValido ? "" : "La clave no debe de contener palabras comunes",
   };
 };
@@ -112,4 +113,3 @@ const tienePalabrasComunes = (
 //comprobar
 console.log(validarClave("Bianca123", "hfyYnc7$", commonPasswords));
 console.log(validarClave("Bianca123", "password123", commonPasswords));
-
