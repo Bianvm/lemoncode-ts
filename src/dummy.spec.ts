@@ -1,12 +1,39 @@
 import { productos } from "./mock";
-import { LineaTicket, TicketFinal } from "./model";
+import { LineaTicket, TicketFinal, TotalPorTipoIva } from "./model";
 import {
   cacularPrecioTotalConIva,
   calcularTotalSinIva,
   calcularTicket,
+  calcularDesgloseIva,
 } from "./motor";
 
 describe("motor", () => {
+  describe("calcularDesgloseIva", () => {
+    it("debería devolver el total desglosado según el tipo de IVA", () => {
+      // Arrange
+      const lineasTicket: LineaTicket[] = [
+        {
+          cantidad: 1,
+          producto: {
+            nombre: "producto1",
+            precio: 1,
+            tipoIva: "general",
+          },
+        },
+      ];
+      // Act
+      const result = calcularDesgloseIva(lineasTicket);
+      // Assert
+      const expectedResult: TotalPorTipoIva[] = [
+        {
+          cuantia: 0.21,
+          tipoIva: "general",
+        },
+      ];
+      expect(result).toStrictEqual(expectedResult);
+    });
+  });
+
   describe("calcularPrecioTotalTicket", () => {
     it("debería devolver el valor total del ticket", () => {
       // Arrange
@@ -32,7 +59,7 @@ describe("motor", () => {
   });
 
   describe("calcularTicket", () => {
-    it.only("Debería devolver LOS PRECIOS TOTALES", () => {
+    it("Debería devolver LOS PRECIOS TOTALES", () => {
       //arrange
       const lineasTicket: LineaTicket[] = [
         {
@@ -48,7 +75,12 @@ describe("motor", () => {
       const result = calcularTicket(lineasTicket);
       //assert
       const expectedResult: TicketFinal = {
-        desgloseIva: [],
+        desgloseIva: [
+          {
+            cuantia: 0.21,
+            tipoIva: "general",
+          },
+        ],
         lineas: [
           {
             cantidad: 1,
@@ -59,12 +91,12 @@ describe("motor", () => {
           },
         ],
         total: {
-          totalConIva: 0,
-          totalIva: 0,
-          totalSinIva: 0,
+          totalConIva: 1.21,
+          totalIva: 0.21,
+          totalSinIva: 1,
         },
       };
-      expect(result).toBe(expectedResult);
+      expect(result).toStrictEqual(expectedResult);
     });
   });
 });

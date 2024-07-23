@@ -70,11 +70,12 @@ const reduceTipoDeIva = (
   return prevValue;
 };
 
-const calcularDesgloseIva = (
+export const calcularDesgloseIva = (
   lineasTicket: LineaTicket[]
 ): TotalPorTipoIva[] => {
   return lineasTicket.reduce(reduceTipoDeIva, []);
 };
+
 export const calcularTicket = (lineasTicket: LineaTicket[]): TicketFinal => {
   return {
     lineas: mapeoResultadoLineaTicket(lineasTicket),
