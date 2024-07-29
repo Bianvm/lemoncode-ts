@@ -6,5 +6,5 @@ export interface ValidacionClave {
 export const MAYUS_REGEX = /[A-Z]+/;
 export const MINUS_REGEX = /[a-z]+/;
 export const SPECIAL_CHARACTER_REYEX = /\W/g;
-export const NUMBER_REGEX = /\d/;
+export const NUMBER_REGEX = /\d/; //equivale [0-9]
 export const LONGITUD_MINIMA = 8;

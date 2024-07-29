@@ -53,19 +53,20 @@ export const tieneMayusculasYMinusculas = (clave: string): ValidacionClave => {
 
 //La clave debe de tener números.
 export const tieneNumeros = (clave: string): ValidacionClave => {
-  const tieneNumero = !!clave.match(NUMBER_REGEX);
-  const esValido = tieneNumero;
+  const esValido = !!clave.match(NUMBER_REGEX);
+
   return {
-    esValida: true,
+    esValida: esValido,
     error: esValido ? "" : "La clave debe de tener números",
   };
 };
+
 //La clave debe de tener caracteres especiales (@,#,+, _, ...)
 export const tieneCaracteresEspeciales = (clave: string): ValidacionClave => {
-  const tieneCaracteresEspeciales = !!clave.match(SPECIAL_CHARACTER_REYEX);
-  const esValido = tieneCaracteresEspeciales;
+  const esValido = !!clave.match(SPECIAL_CHARACTER_REYEX);
+
   return {
-    esValida: true,
+    esValida: esValido,
     error: esValido ? "" : "La clave debe de tener caracteres especiales",
   };
 };
