@@ -28,7 +28,6 @@ body {
   display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {
@@ -38,9 +37,51 @@ h1 {
 
 #app {
   max-width: 1280px;
-  margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+.buscador {
+  max-width: 1280px;
+  
+}
+
+.flex-container-1 div{
+  display: flex;
+  background-color: #e2d0ad;
+  margin-left: 50px;
+  flex-flow: column;
+  
+  
+}
+
+.input-filtrado{
+  background-color: #fff;
+  border-color: #729fcf;
+  color:#333;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  padding: 12px;
+  margin-left: 20%;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0px 0px 20px -18px;
+  -webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
+  -moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
+  box-shadow: 0 0 5px rgba(109,207,246,.5);
+}
+.boton-filtrar{
+  width: 165px;
+  height: 50px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 17px;
+  border-radius: 1rem;
+  margin:auto;
+  margin-bottom: 10px;
+  position: relative;
+  background: #79787c;
+  transition: 0.1s;
 }
 
 .logo {
