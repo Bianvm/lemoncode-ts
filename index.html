@@ -1,15 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-  </head>
-  <body>
-    <div id="app">
-      <h1>TypeScript Sandbox</h1>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + TS</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1></h1>
+    <h2>Validación IBAN Bancario</h2>
+    <div>
+      <p>IBAN: <input type="text" id="iban-input" class="iban-input" size="40"></p>
+      <p>Ejemplo: ES6621000418401234567891</p>
     </div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+    <div>
+      <p>
+        <input type="submit" value="Validar" id="boton-validar">
+        <input type="reset" value="Borrar" id="boton-borrar">
+      </p>
+    </div>
+    <div>
+      <p> El IBAN <span id="texto-iban-formado"></span></p>
+      <p> El IBAN <span id="iban-valido"></span></p>
+      <p > Banco: <span id="nombre-banco"></span> </p>
+      <p >Código de sucursal: <span id="codigo-sucursal"></span></p>
+      <p >Digito de control: <span id="digito-control"></span></p>
+      <p>Numero de cuenta: <span id="numero-cuenta"></span></p>
+    </div>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>
